@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<string>
+#include<queue>
 #include<map>
 
 using namespace std;
@@ -26,20 +27,30 @@ int change(string s){
     }
 }
 
-void dfs(int now_vis,int& head_node,int& num_member,int& total_w){
-    num_member++;
-    vis[now_vis] = 1;
-    if(P[now_vis]>P[head_node]){
-        head_node = now_vis;
-    }
-    for(int i=0;i<n;i++){
-        if(D[now_vis][i]){
-            total_w += D[now_vis][i];
-            D[now_vis][i] = D[i][now_vis] = 0;
-            //vis[i] = 1;
-        if(vis[i]==0)
-            dfs(i,head_node,num_member,total_w);
+void bfs(int now_vis,int& head_node,int& num_member,int& total_w){
+    //vis[now_vis] = 1;
+    queue<int> q;
+    q.push(now_vis);
+
+    while(!q.empty()){
+        int top = q.front();
+        //cout<<int2string[top]<<" ";
+        if(vis[top]==0){
+            vis[top] = 1;
+            num_member++;
         }
+        q.pop();
+        //num_member++;
+        for(int i=0;i<n;i++){
+            if(vis[i]==0 && D[top][i]){
+                total_w += D[top][i];
+                D[top][i] = D[i][top] = 0;
+                q.push(i);
+                if(P[i]>P[head_node]){
+                    head_node = i;
+                }
+            }
+        }    
     }
 }
 
@@ -47,7 +58,7 @@ int main(){
     cin>>n>>k;
 
     string a,b;
-    int value;
+    int value;  //用邻接矩阵好于邻接表
     for(int i=0;i<n;i++){
         cin>>a>>b>>value;
         int id1 = change(a);
@@ -60,7 +71,7 @@ int main(){
     for(int i=0;i<n;i++){
         if(vis[i]==0){
         int head_node=i,num_member=0,total_w=0;
-        dfs(i,head_node,num_member,total_w);
+        bfs(i,head_node,num_member,total_w);
         if(num_member>2&&total_w>k){
             gang[int2string[head_node]] = num_member;
         }
