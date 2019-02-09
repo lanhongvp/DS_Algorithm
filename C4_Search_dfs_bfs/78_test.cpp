@@ -1,3 +1,7 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
 class Solution {
 public:
     vector<vector<int>> result;
@@ -9,7 +13,7 @@ public:
         1 2 *     3          1      3        1     2
         2 3      2          3      1        2     1
         3  */
-		tmp     1
+		//tmp     1
 		
         int n = nums.size();
         dfs(0,nums,n, 0);
@@ -23,7 +27,8 @@ public:
             cout<<"ha"<<endl;
             return;
         }else{
-            for(int i=idx;i<n;i++){     // depth = 1
+            for(int i=idx;i<n;i++){ 
+                cout<<"idx "<<idx<<" ";    // depth = 1
                 tmp.push_back(nums[idx]);   //nums[0]  nums[1]  nums[2]
                 cout << "depth: " << depth << " ";
                 cout << "nums:" << nums[idx] << " i:" << i << endl;
@@ -32,5 +37,13 @@ public:
             }
         }
     }
-    
+  
 };
+
+int main(){
+    vector<vector<int>> ans;
+    vector<int> nums;
+    nums = {1,2,3};
+    ans = Solution().subsets(nums);
+    cout<<ans.size();
+}

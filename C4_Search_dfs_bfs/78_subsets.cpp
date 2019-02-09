@@ -15,18 +15,24 @@ public:
         3      2          3      1        2     1
         */
         int n = nums.size();
-        dfs(0,nums,n);
+        dfs(0,nums,n,0);
         return result;
     }
     
-     void dfs(int idx,vector<int>& nums,int n){
+     void dfs(int idx,vector<int>& nums,int n,int depth){
+       depth++;
        for(int i=idx;i<n;i++){
+           cout<<"idx "<<idx<<" "<<"depth "<<depth<<" ";
+           cout<<"i "<<i<<" ";
             tmp.push_back(nums[i]);
-            //cout<<"i "<<i<<" "<<endl;
-            dfs(i+1,nums,n);
+            cout<<"ni "<<nums[i]<<endl;
+            dfs(i+1,nums,n,depth);
+            //cout<<"xi "<<idx<<" "<<endl;
             result.push_back(tmp);
             tmp.pop_back();
+            //return;
        }
+       return;
     }   
 };
 
@@ -36,5 +42,4 @@ int main(){
     nums = {1,2,3};
     ans = Solution().subsets(nums);
     cout<<ans.size();
-
 }
