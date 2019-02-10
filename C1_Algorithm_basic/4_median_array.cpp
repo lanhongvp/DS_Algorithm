@@ -7,7 +7,7 @@ using namespace std;
 vector<int> nums1;
 vector<int> nums2;
 
-class Solution {
+class Solution1 {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
       //1.initial

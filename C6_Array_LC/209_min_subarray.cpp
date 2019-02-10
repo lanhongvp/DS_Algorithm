@@ -6,26 +6,31 @@ using namespace std;
 class Solution {
 public:
     int minSubArrayLen(int s, vector<int>& nums) {
-        int left = 0;
-        int right = -1;
-        int length = nums.size() + 1;
-        int sum = 0;
-        //只要左边界还没到最右边，就可以继续查找合适的数组
-        while (left < nums.size()) {
-            //和太小，右边界继续后移，扩大范围
-            if (sum < s && right + 1 < nums.size()) {
-                right ++;
-                sum += nums[right];
-                cout<<"sum1 "<<sum<<" ";
-            } else {
-                sum -= nums[left] ;
-                left ++;
-                cout<<"sum2 "<<sum<<endl;
-            }
-            if (sum == s) length = min(length, right - left + 1);
+      //1.initial
+      int n = nums.size();
+      int sum = 0;
+      int L=0,R=0;
+      int cnt = INT_MAX;
+      //2.corner case
+      if(n==0) return 0;
+      //3.main pro
+      while(L<n){
+        if(sum<s && R<n){
+          sum += nums[R];  
+          R++;
+          cout<<"sum1 "<<sum<<" "; 
+          cout<<"R "<<R<<" ";      
+        }else{
+          sum -= nums[L];
+          L++;
+          cout<<"sum2 "<<sum<<" ";
+          cout<<"L "<<L<<" ";
         }
-        if (length == nums.size() + 1) return 0;
-        return length;
+        if(sum>=s) cnt = min(cnt,(R-L));
+        cout<<"cnt "<<cnt<<endl;
+      }
+      if(cnt==INT_MAX) return 0;
+      else return cnt;
     }
 };
 

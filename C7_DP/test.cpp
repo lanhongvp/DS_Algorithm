@@ -1,13 +1,14 @@
 #include<iostream>
 #include<string>
+#include<cmath>
 
 using namespace std;
 
 int main(){
-    string str;
-    cin>>str;
-    for(int i=0;i<str.size();i++){
-        if(str[i]>'0')
-        cout<<str[i];
-    }
+   int n;
+   cin>>n;
+   
+   double res = fmod(log(n),log(3));
+   cout<<res;
+   
 }

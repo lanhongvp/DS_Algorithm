@@ -9,39 +9,24 @@ public:
     int minSubArrayLen(int s, vector<int>& nums) {
       //1.initial
       int n = nums.size();
-      int L = 0;
-      int cnt = 1;
       int sum = 0;
-      map<int,int> ans;
+      int L=0,R=0;
+      int cnt = INT_MAX;
       //2.corner case
       if(n==0) return 0;
       //3.main pro
-      for(int i=0;i<n;){
-        if(sum+nums[i]<s){
-          cnt++;
-          sum += nums[i];
-          cout <<"i "<<i<<" ";
-          cout <<"sum1 "<<sum<<" ";
-          i++;
-        }else if(sum+nums[i]>s){
-          i = L++;
-          cnt = 1;
-          sum = nums[L];
-          cout <<"sum2 "<<sum<<" ";
-          cout<<"L "<<L<<" ";
-          continue;
-        }else if(sum+nums[i]==s){
-          cout<<"cnt "<<cnt<<" ";
-          cnt++;
-          if(ans.find(s)!=ans.end()){
-            if(ans[s]>cnt) ans[s] = cnt;
-          }else
-            ans[s] = cnt;
-            i++;
+      while(L<n){
+        if(sum<s && R<n){
+          sum += nums[R];         
+          R++;
+        }else{
+          sum -= nums[L];
+          L++;
         }
+        if(sum>=s) cnt = min(cnt,(R-L));
       }
-      if(ans.find(s)==ans.end()) return 0;
-      else return ans[s];
+      if(cnt==INT_MAX) return 0;
+      else return cnt;
     }
 };
 
