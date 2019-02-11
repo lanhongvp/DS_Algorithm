@@ -5,40 +5,23 @@ using namespace std;
 class Solution {
 public:
     int numDecodings(string s) {
-      //1.Initialization
-      int n=s.size();
-      int dp[n+1];
-      //2.Corner case
-      if(s[0]=='0')
-        return 0;
-      if(s.size()==1)
-        return 1;
-      //3.State transform
-      dp[0] = 1;
-      dp[1] = 1;
-    //   cout<<"size"<<s.size()<<" ";
-      for(int i=1;i<=s.size();i++){
-        cout<<i<<"->";
-        if(s[i]!='0'){
-            if(i>1 && ((s[i-2]<='1'&&s[i-2]>'0')||(s[i-2]>'0'&&s[i-2]<='2')&&(s[i-1]<='6'&&s[i-1]>'0'))){
-                dp[i] = dp[i-1]+dp[i-2];
-                cout<<i<<"ha";
-            }   
-            else{
-                cout<<i<<" xi";
-                dp[i] = dp[i-1];
+        int cnt = 0;
+        if(s.size() == 0 || (s.size() == 1 && s[0] == '0')) return 0;
+        if(s.size() == 1) return 1;
+        vector<int> dp(s.size() + 1, 0);
+        dp[0] = 1;
+        for(int i = 0; i < s.size(); ++i){
+            dp[i+1] = s[i] == '0' ? 0 : dp[i];
+            if(i > 0 && (s[i-1] == '1' || (s[i-1] == '2' && s[i] <= '6'))){
+                dp[i+1] += dp[i-1];
             }
         }
-        else{
-            cout<<"i"<<i;
-            dp[i] = dp[i-1];
-        }
-        
-        cout<<endl;
-      }
-      return dp[n];
+        return dp.back();
     }
+    
 };
+
+
 int main(){
     string str;
     cin>>str;
