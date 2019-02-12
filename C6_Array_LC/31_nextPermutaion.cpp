@@ -41,6 +41,29 @@ public:
 
     }
 };
+class Solution1 {
+public:
+    void nextPermutation(vector<int>& nums) {
+        int n = nums.size();
+        int i = n-1;
+        int j = 0;
+        //find the first inverse number
+        while(i>0 && nums[i-1]>=nums[i]){
+            i--;
+        }
+        //exist inverse number
+        if((i-1)>=0){
+            j = n-1;
+            //find the first larger num than the inverse num
+            while(j>=0 && nums[j]<=nums[i-1]){
+                j--;
+            }
+            swap(nums[i-1],nums[j]);
+        }
+        //after swap, sort the rest of the num
+        sort(nums.begin()+i,nums.end());
+    }
+};
 
 int main(){
     vector<int> nums={1,5,1};

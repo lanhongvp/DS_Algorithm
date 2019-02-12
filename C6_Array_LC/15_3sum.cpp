@@ -42,14 +42,44 @@ public:
     }
 };
 
-    int main(){
-        vector<vector<int>> result;
-        vector<int> nums={-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6};
-        result = Solution().threeSum(nums);
-        for(int i=0;i<result.size();i++){
-            for(int j=0;j<3;j++){
-                cout<<result[i][j]<<" ";
+class Solution {
+public:
+    vector<vector<int>> ans;
+    vector<int> tmp;
+    int n;
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        n = nums.size();
+        dfs(0,0,nums);
+        return ans;
+    }
+    
+    void dfs(int idx,int sum,vector<int>& nums){
+        if(sum==0 && tmp.size()==3){
+            ans.push_back(tmp);
+            return;
+        }else{
+            if(sum!=0 && tmp.size()==3)
+                return;
+            for(int i=idx;i<n;i++){
+                if(i>0 &&(nums[i]==nums[i-1])&&i>idx)
+                    continue;
+                tmp.push_back(nums[i]);
+                dfs(i+1,sum+nums[i],nums);
+                tmp.pop_back();
             }
-            cout<<endl;
         }
     }
+};
+
+int main(){
+    vector<vector<int>> result;
+    vector<int> nums={-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6};
+    result = Solution().threeSum(nums);
+    for(int i=0;i<result.size();i++){
+        for(int j=0;j<3;j++){
+            cout<<result[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+}
